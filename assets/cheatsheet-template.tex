@@ -1,0 +1,118 @@
+% =====================================================================
+%  DENSE B/W EXAM CHEAT-SHEET TEMPLATE  (study-notes-builder skill)
+%  - 2-column, 9pt, Times, tight spacing, grayscale-only (B/W-printer safe)
+%  - Run-in gray tags (\Def \Key \Trap \Why \Eg \Cmp) + mcqbox + \coursepart
+%  Build:  pdflatex main.tex   (run TWICE for the TOC/refs/headers)
+%  HOW TO USE:
+%    1. Replace <<COURSE>>, <<SUBTITLE>>, <<HEADER>> below.
+%    2. Put each chapter in chapters/chNN_topic.tex (it should start with
+%       \section{...}\label{...} — NOT \documentclass; it is \input here).
+%    3. Group chapters with \coursepart{Part name} dividers.
+%    4. Optional appendix at chapters/appendix.tex (lecture map + formula sheet).
+% =====================================================================
+\documentclass[9pt]{extarticle}
+\usepackage[letterpaper,top=0.5in,bottom=0.5in,left=0.5in,right=0.5in,headsep=5pt,footskip=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}             % Times text + math (denser than Computer Modern)
+\usepackage[scaled=0.88]{helvet}  % Helvetica for headings
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{bm}
+\allowdisplaybreaks
+\AtBeginDocument{\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}%
+  \setlength{\abovedisplayshortskip}{1pt}\setlength{\belowdisplayshortskip}{1pt}}
+\usepackage{booktabs,array,tabularx,multirow}
+\renewcommand{\arraystretch}{1.05}\setlength{\tabcolsep}{3.5pt}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{enumitem}
+\setlist{itemsep=0.4pt,parsep=0pt,topsep=1pt,partopsep=0pt}
+\setlist[itemize]{label=\textbullet,leftmargin=1.1em}
+\setlist[enumerate]{leftmargin=1.5em}
+% ---- Grayscale-only palette (prints cleanly on a B/W printer) ----
+\usepackage{xcolor}
+\definecolor{tag}{gray}{0.86}\definecolor{barmd}{gray}{0.80}
+\definecolor{hdr}{gray}{0.88}\definecolor{zeb}{gray}{0.95}
+\usepackage{multicol}\setlength{\columnsep}{11pt}\setlength{\columnseprule}{0.3pt}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shapes.geometric,
+  shapes.misc,matrix,decorations.pathreplacing,patterns,chains}
+\tikzset{
+  box/.style={draw,rounded corners=1.5pt,align=center,inner sep=2pt,font=\scriptsize},
+  sbox/.style={draw,align=center,inner sep=2pt,font=\scriptsize,fill=zeb},
+  op/.style={draw,circle,inner sep=1pt,font=\tiny},
+  ar/.style={-{Stealth[length=4pt]},thin}}
+\usepackage{titlesec}
+\titleformat{\section}{\normalsize\bfseries\sffamily}{\thesection}{0.4em}{}[{\vspace{-2.5pt}\hrule height 0.6pt}]
+\titlespacing*{\section}{0pt}{4pt plus 1pt}{2pt}
+\titleformat{\subsection}{\small\bfseries\sffamily}{\thesubsection}{0.4em}{}
+\titlespacing*{\subsection}{0pt}{3pt plus .5pt}{1pt}
+\titleformat{\subsubsection}[runin]{\bfseries}{}{0pt}{}[.\;]
+\titlespacing*{\subsubsection}{0pt}{2pt}{0.4em}
+\setcounter{secnumdepth}{2}\setcounter{tocdepth}{1}
+\setlength{\parindent}{0pt}\setlength{\parskip}{1.6pt plus 0.4pt}
+\linespread{1.0}\frenchspacing
+\emergencystretch=2.5em       % absorb rare unbreakable-token overflows in narrow columns
+\hyphenpenalty=50\tolerance=600
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[L]{\scriptsize\sffamily <<HEADER>>}
+\fancyhead[R]{\scriptsize\sffamily\leftmark}
+\fancyfoot[R]{\scriptsize\sffamily\thepage}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection\ \ #1}{}}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black,
+  bookmarksnumbered=true,pdftitle={<<COURSE>> — Exam Cheat Sheets}]{hyperref}
+% =====================================================================
+%  Lightweight emphasis tags (no boxes, ~0 wasted vertical space)
+%  Usage:  \Key Operator fusion raises arithmetic intensity ...
+% =====================================================================
+\newcommand{\tg}[1]{\colorbox{tag}{\footnotesize\bfseries\sffamily #1}\hspace{2pt}}
+\newcommand{\Def}{\tg{DEF}}   % definition
+\newcommand{\Key}{\tg{KEY}}   % must-know
+\newcommand{\Trap}{\tg{TRAP}} % common exam pitfall
+\newcommand{\Why}{\tg{WHY}}   % intuition / reason
+\newcommand{\Eg}{\tg{EX}}     % worked example
+\newcommand{\Cmp}{\tg{VS}}    % comparison / tradeoff
+\newcommand{\Mcq}{\tg{MCQ}}
+\newcommand{\Ans}{\textbf{Ans:}\ }
+\newcommand{\dt}[1]{\textbf{#1}} % defined term inline
+% Compact MCQ block (multicol-safe: gray title bar + indented body, NO fragile boxes)
+\newenvironment{mcqbox}[1]{%
+  \par\addvspace{3pt}\nobreak
+  \noindent\colorbox{barmd}{\makebox[\dimexpr\linewidth-2\fboxsep][l]{\footnotesize\bfseries\sffamily MCQ:\ #1}}%
+  \par\nobreak\vskip1.5pt\begingroup\footnotesize\setlength{\leftskip}{0.6em}}%
+  {\par\endgroup\addvspace{3pt}}
+\newcommand{\E}{\mathbb{E}}\newcommand{\R}{\mathbb{R}}\newcommand{\grad}{\nabla}
+\newcommand{\T}{^{\!\top}}\newcommand{\bigO}{\mathcal{O}}
+% Part divider: compact full-column black bar (use a few across the whole doc)
+\newcounter{coursepart}\renewcommand{\thecoursepart}{\Roman{coursepart}}
+\newcommand{\coursepart}[1]{%
+  \par\addvspace{4pt}\stepcounter{coursepart}%
+  \phantomsection\addcontentsline{toc}{section}{\protect\textbf{Part \thecoursepart: #1}}%
+  \noindent\colorbox{black}{\parbox{\dimexpr\linewidth-2\fboxsep}{\centering
+    \sffamily\bfseries\color{white}\small PART \thecoursepart\,:\, #1}}%
+  \par\addvspace{2pt}}
+
+\begin{document}
+% ---------- Compact masthead (no wasted title page) ----------
+\begin{center}
+{\large\bfseries\sffamily <<COURSE>> \;\textbullet\; Exam Cheat Sheets}\\[1pt]
+{\footnotesize <<SUBTITLE>>}
+\end{center}\vspace{-2pt}
+{\footnotesize\noindent\textbf{Legend:}\ \tg{DEF} definition \quad \tg{KEY} must-know \quad \tg{TRAP} pitfall \quad \tg{WHY} intuition \quad \tg{EX} example \quad \tg{VS} comparison \quad \tg{MCQ} in-class question.}
+\vspace{2pt}\hrule height 0.6pt\vspace{3pt}
+% ---------- Compact TOC (fast topic lookup during the exam) ----------
+{\footnotesize\setlength{\parskip}{0pt}\begin{multicols}{2}\tableofcontents\end{multicols}}
+\vspace{2pt}\hrule height 0.4pt\vspace{3pt}
+% =====================================================================
+%  BODY (dense two columns). Wire your chapters below, grouped by \coursepart.
+%  \IfFileExists guards let the doc compile while chapters are still being written.
+% =====================================================================
+\begin{multicols}{2}
+\coursepart{<<PART 1 NAME>>}
+\IfFileExists{chapters/ch01_topic.tex}{\input{chapters/ch01_topic.tex}}{}
+% ... add \input lines per chapter ...
+\IfFileExists{chapters/appendix.tex}{\input{chapters/appendix.tex}}{}
+\end{multicols}
+\end{document}
