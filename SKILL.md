@@ -35,8 +35,6 @@ solves both with a fan-out extraction + an audit→patch→re-audit verification
 - **MCQs:** reproduce every in-class multiple-choice / quiz question **verbatim with
   options and the answer** — high-value exam signal. Use the `mcqbox` environment.
 - **Exclusions:** drop guest lectures and pure logistics/admin slides.
-- **Git:** treat the booklet as a personal artifact — **never commit or push**; add a
-  `.gitignore` containing `*` inside the output folder to keep git status clean.
 
 Still confirm the **per-run** specifics (which PDFs are in scope, which to exclude,
 which source is authoritative) — these change every class.

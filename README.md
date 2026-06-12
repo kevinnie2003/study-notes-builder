@@ -1,6 +1,6 @@
 # study-notes-builder
 
-A [Claude Code](https://docs.claude.com/en/docs/claude-code) **skill** that turns a
+A **skill** that turns a
 folder of course PDFs — lecture slides, scribe notes, textbook chapters, or papers —
 into a single **dense, print-ready, exam-focused cheat-sheet booklet** (LaTeX → PDF),
 with a *verified* "drop-nothing" completeness guarantee.

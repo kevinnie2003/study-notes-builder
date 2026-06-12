@@ -68,5 +68,3 @@ fails or output looks wrong.
   add chapters.
 - **Compile signal**: after each change run `pdflatex` and check the PDF page count
   actually changed; grep the log for `^! ` (errors) and `Overfull \hbox (` (layout).
-- **Never `git commit`/`push`** the notes — keep them as untracked working files
-  (the `.gitignore` with `*` inside the notes folder keeps git status clean).

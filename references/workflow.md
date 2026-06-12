@@ -16,8 +16,8 @@ These vary by class, so confirm even though format defaults are baked in:
   backup to fill detail. Ask which is authoritative if they conflict.
 - **Length tolerance.** "Maximal detail, dense" is the default; confirm there's no
   hard page cap (there usually isn't — the user can print as many sheets as needed).
-- **Output location.** A dedicated folder (e.g. `study-notes/`). Add a `.gitignore`
-  with `*` inside it so it never pollutes the user's git status. NEVER commit/push.
+- **Output location.** A dedicated folder (e.g. `study-notes/`) holding `main.tex`,
+  `chapters/`, `figures/`, and the compiled PDF.
 
 ## Phase 1 — Tooling
 
